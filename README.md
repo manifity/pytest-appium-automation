@@ -1,7 +1,7 @@
 # python-appium-automation
 Automation course #24
 
-###Требования
+### Требования
 - Python == 3.7
 - Pytest == 3.9.1
 
