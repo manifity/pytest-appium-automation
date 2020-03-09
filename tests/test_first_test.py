@@ -1,8 +1,8 @@
-import pytest
+from src.locators_and_actions import OnboardingPage, MainElements
 
 
-class TestFirst:
+def test_get_text_from_search_field(appdriver):
+    OnboardingPage(appdriver).press_skip_onboarding_button()
 
-    @pytest.mark.usefixtures
-    def test_first(self, appdriver):
-        print('First test run')
+    assert MainElements(appdriver).get_text_in_the_search_field() == 'Поиск по Википедии',\
+        'Text isn\'t presented in the Search field'
