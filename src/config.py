@@ -2,6 +2,7 @@ APPIUM_HOST = 'http://localhost:4444/wd/hub'
 
 MY_APP_ANDROID = '/Users/m.barinov/PycharmProjects/appium/Simulators/Wikipedia_2.7.280-r-2019-04-26_apk-dl.com.apk'
 BUNDLE_APP = 'org.wikipedia'
+BUNDLE_ANDROID = 'android'
 
 DEVICES = {
     'Pixel Emulator (9.0)': 'emulator-5554'
