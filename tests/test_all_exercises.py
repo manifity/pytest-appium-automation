@@ -64,3 +64,18 @@ def test_save_two_articles(appdriver):
     ArticlesNames(appdriver).delete_java_with_swipe()
 
     assert ArticlesNames(appdriver).java_article_no_shown() is None, 'Java\'s article isn\'t deleted'
+
+
+def test_assert_title(appdriver):
+    # FIND AND SAVE THE FIRST ARTICLE
+    OnboardingElements(appdriver).press_skip_onboarding_button()
+    MainElements(appdriver).click_to_the_search_field()
+    MainElements(appdriver).input_text_to_the_search_field('Python')
+    SearchElements(appdriver).open_programming_language_page()
+
+    assert appdriver.find_element_by_xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/'
+                                           'android.widget.FrameLayout/android.widget.FrameLayout/android.widget'
+                                           '.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/'
+                                           'android.view.ViewGroup/android.webkit.WebView/android.webkit.WebView/'
+                                           'android.view.View/android.view.View[1]').is_displayed()
+    # assert ArticlePage(appdriver).assert_element_present()

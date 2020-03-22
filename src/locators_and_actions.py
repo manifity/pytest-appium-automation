@@ -66,6 +66,11 @@ class ArticlePage(BasePage):
     _go_back_page_button = (MobileBy.ACCESSIBILITY_ID, 'Перейти вверх')
 
     _reading_list_name = (MobileBy.ANDROID_UIAUTOMATOR, 'new UiSelector().text("TEST READING LIST")')
+    _article_title_string = (MobileBy.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/'
+                                             'android.widget.FrameLayout/android.widget.FrameLayout/android.widget'
+                                             '.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/'
+                                             'android.view.ViewGroup/android.webkit.WebView/android.webkit'
+                                             '.WebView/android.view.View/android.view.View[1]')
 
     def press_save_article_to_my_list(self):
         super().get_element_and_click(self._save_article_button)
@@ -84,6 +89,9 @@ class ArticlePage(BasePage):
 
     def delete_article_by_swipe(self):
         super().get_element_left_swipe(self._reading_list_name)
+
+    def assert_element_present(self):
+        super().get_element(self._article_title_string)
 
 
 class BottomBar(BasePage):
