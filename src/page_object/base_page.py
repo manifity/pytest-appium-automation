@@ -30,6 +30,7 @@ class BasePage:
     def get_element_and_click(self, locator: tuple, timeout=10):
         element = WebDriverWait(self._driver, timeout).until(
             ex_cond.visibility_of_element_located(locator), ' : '.join(locator))
+        assert element.is_displayed() is True, 'Cannot press to the button'
         return element.click()
 
     def get_element_left_swipe(self, locator: tuple, timeout=10):
