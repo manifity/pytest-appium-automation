@@ -1,6 +1,7 @@
 import allure
 from src.page_object.onboarding_elements import OnboardingElements
 from src.page_object.search import Search
+from src import credo
 
 
 @allure.title('Ex2: Создание метода')
@@ -26,3 +27,13 @@ def test_cancel_search(appdriver):
         'Text isn\'t presented in the Search field'
     assert Search(appdriver).get_text_in_the_empty_search() == \
         'Ищите и читайте свободную энциклопедию на своём языке', 'Search results aren\'t vanished'
+
+
+@allure.title('Ex4*: Тест: проверка слов в поиске')
+def test_check_word_in_search_results(appdriver, ):
+    OnboardingElements(appdriver).press_skip_onboarding_button()
+    Search(appdriver).click_to_the_search_field()
+    Search(appdriver).input_text_to_the_search_field(credo.search_python)
+
+    Search(appdriver).find_keyword_in_search_results('Python')
+

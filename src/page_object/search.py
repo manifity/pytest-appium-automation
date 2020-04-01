@@ -1,3 +1,4 @@
+import re
 import allure
 from appium.webdriver.common.mobileby import MobileBy
 from src.config import BUNDLE_APP
@@ -12,10 +13,7 @@ class Search(BasePage):
     _search_text_field_container_id = (MobileBy.ID, '%s:id/search_src_text' % BUNDLE_APP)
     _cancel_search_button = (MobileBy.ID, '%s:id/search_close_btn' % BUNDLE_APP)
     _empty_message_string = (MobileBy.ID, '%s:id/search_empty_message' % BUNDLE_APP)
-    _search_results_list = (MobileBy.ANDROID_UIAUTOMATOR,
-                            'new UiSelector().resourceId("org.wikipedia:id/search_results_list")')
-    # _searched_result_programming_lnguage = (MobileBy.ANDROID_UIAUTOMATOR,
-    #                                          f'new UiSelector().text("{credo.programming_language}")')
+    _search_results_list = (MobileBy.XPATH, '//*[@resource-id="%s:id/page_list_item_title"]' % BUNDLE_APP)
     _searched_result_programming_language = (MobileBy.XPATH, f'//*[contains(@text, "{credo.programming_language}")]')
 
     @allure.step('Получение текста из поля поиска')
@@ -45,3 +43,11 @@ class Search(BasePage):
     @allure.step('Нажатие на элемент с текстом "Язык программирования"')
     def open_programming_language_page(self):
         super().get_element_and_click(self._searched_result_programming_language)
+
+    @allure.step('Поиск ключевого слова во всех видимых результатах поиска')
+    def find_keyword_in_search_results(self, keyword):
+        results_list = super().get_elements(self._search_results_list)
+        for element in results_list:
+            sentence = element.text
+            if keyword not in sentence:
+                raise
