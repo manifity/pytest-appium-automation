@@ -1,6 +1,4 @@
-import re
 import allure
-from appium.webdriver.common.mobileby import MobileBy
 from src.config import BUNDLE_APP
 from src.page_object.base_page import BasePage
 from src import credo
@@ -8,13 +6,13 @@ from src import credo
 
 class Search(BasePage):
 
-    _search_field_default_text = (MobileBy.XPATH, '//*[contains(@text, "Поиск по Википедии")]')
-    _search_field_id = (MobileBy.ID, '%s:id/search_container' % BUNDLE_APP)
-    _search_text_field_container_id = (MobileBy.ID, '%s:id/search_src_text' % BUNDLE_APP)
-    _cancel_search_button = (MobileBy.ID, '%s:id/search_close_btn' % BUNDLE_APP)
-    _empty_message_string = (MobileBy.ID, '%s:id/search_empty_message' % BUNDLE_APP)
-    _search_results_list = (MobileBy.XPATH, '//*[@resource-id="%s:id/page_list_item_title"]' % BUNDLE_APP)
-    _searched_result_programming_language = (MobileBy.XPATH, f'//*[contains(@text, "{credo.programming_language}")]')
+    _search_field_default_text = 'xpath://*[contains(@text, "Поиск по Википедии")]'
+    _search_field_id = 'id:%s:id/search_container' % BUNDLE_APP
+    _search_text_field_container_id = 'id:%s:id/search_src_text' % BUNDLE_APP
+    _cancel_search_button = 'id:%s:id/search_close_btn' % BUNDLE_APP
+    _empty_message_string = 'id:%s:id/search_empty_message' % BUNDLE_APP
+    _search_results_list = 'xpath://*[@resource-id="%s:id/page_list_item_title"]' % BUNDLE_APP
+    _searched_result_programming_language = f'xpath://*[contains(@text, "{credo.programming_language}")]'
 
     @allure.step('Получение текста из поля поиска')
     def get_text_in_the_search_field(self):

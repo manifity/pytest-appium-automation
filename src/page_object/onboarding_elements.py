@@ -1,14 +1,13 @@
 import allure
-from appium.webdriver.common.mobileby import MobileBy
 from src.config import BUNDLE_APP, BUNDLE_ANDROID
 from src.page_object.base_page import BasePage
 
 
 class OnboardingElements(BasePage):
 
-    _skip_onboarding_button = (MobileBy.ID, '%s:id/fragment_onboarding_skip_button' % BUNDLE_APP)
-    _offline_article_got_it_button = (MobileBy.ID, '%s:id/onboarding_button' % BUNDLE_APP)
-    _sig_in_pop_up_no_button = (MobileBy.ID, '%s:id/button2' % BUNDLE_ANDROID)
+    _skip_onboarding_button = 'id:%s:id/fragment_onboarding_skip_button' % BUNDLE_APP
+    _offline_article_got_it_button = 'id:%s:id/onboarding_button' % BUNDLE_APP
+    _sig_in_pop_up_no_button = 'id:%s:id/button2' % BUNDLE_ANDROID
 
     @allure.step('Нажатие кнопки "Пропустить" в онбординге (при запуске приложения)')
     def press_skip_onboarding_button(self):

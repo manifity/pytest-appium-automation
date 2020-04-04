@@ -1,5 +1,4 @@
 import allure
-from appium.webdriver.common.mobileby import MobileBy
 from src.config import BUNDLE_APP, BUNDLE_ANDROID
 from src.page_object.base_page import BasePage
 from src import credo
@@ -7,18 +6,18 @@ from src import credo
 
 class Article(BasePage):
 
-    _save_article_button = (MobileBy.ID, '%s:id/article_menu_bookmark' % BUNDLE_APP)
-    _create_reading_list_plus_button = (MobileBy.ID, '%s:id/create_button' % BUNDLE_APP)
-    _create_reading_list_name_field = (MobileBy.ID, '%s:id/text_input' % BUNDLE_APP)
-    _create_reading_list_ok_button = (MobileBy.ID, '%s:id/button1' % BUNDLE_ANDROID)
-    _go_back_page_button = (MobileBy.ACCESSIBILITY_ID, 'Перейти вверх')
+    _save_article_button = 'id:%s:id/article_menu_bookmark' % BUNDLE_APP
+    _create_reading_list_plus_button = 'id:%s:id/create_button' % BUNDLE_APP
+    _create_reading_list_name_field = 'id:%s:id/text_input' % BUNDLE_APP
+    _create_reading_list_ok_button = 'id:%s:id/button1' % BUNDLE_ANDROID
+    _go_back_page_button = 'accessibility_id:Перейти вверх'
 
-    _reading_list_name = (MobileBy.ANDROID_UIAUTOMATOR, f'new UiSelector().text("{credo.my_list_name}")')
-    _article_title_string = (MobileBy.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/'
-                                             'android.widget.FrameLayout/android.widget.FrameLayout/android.widget'
-                                             '.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/'
-                                             'android.view.ViewGroup/android.webkit.WebView/android.webkit'
-                                             '.WebView/android.view.View/android.view.View[1]')
+    _reading_list_name = f'android_uiautomator:new UiSelector().text("{credo.my_list_name}")'
+    _article_title_string = 'xpath:/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/' \
+                            'android.widget.FrameLayout/android.widget.FrameLayout/android.widget' \
+                            '.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/' \
+                            'android.view.ViewGroup/android.webkit.WebView/android.webkit' \
+                            '.WebView/android.view.View/android.view.View[1]'
 
     @allure.step('Нажатие кнопки сохранения в список')
     def press_save_article_to_my_list(self):
@@ -51,8 +50,8 @@ class Article(BasePage):
 
 class ArticlesNames(BasePage):
 
-    _python = (MobileBy.ANDROID_UIAUTOMATOR, f'new UiSelector().text("{credo.search_python}")')
-    _java = (MobileBy.ANDROID_UIAUTOMATOR, f'new UiSelector().text("{credo.search_java}")')
+    _python = f'android_uiautomator:new UiSelector().text("{credo.search_python}")'
+    _java = f'android_uiautomator:new UiSelector().text("{credo.search_java}")'
 
     @allure.step('Получение текста статьи (Python)')
     def python_article(self):
