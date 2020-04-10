@@ -11,7 +11,9 @@ class Search(BasePage):
     _search_text_field_container_id = 'id:%s:id/search_src_text' % BUNDLE_APP
     _cancel_search_button = 'id:%s:id/search_close_btn' % BUNDLE_APP
     _empty_message_string = 'id:%s:id/search_empty_message' % BUNDLE_APP
-    _search_results_list = 'xpath://*[@resource-id="%s:id/page_list_item_title"]' % BUNDLE_APP
+    _search_results_list_title = 'xpath://*[@resource-id="%s:id/page_list_item_title"]' % BUNDLE_APP
+    _search_results_list_description = 'xpath://*[@resource-id="%s:id/page_list_item_description"]' % BUNDLE_APP
+    _search_results_list_all = 'xpath://android.widget.TextView'
     _searched_result_programming_language = f'xpath://*[contains(@text, "{credo.programming_language}")]'
 
     @allure.step('Получение текста из поля поиска')
@@ -44,8 +46,28 @@ class Search(BasePage):
 
     @allure.step('Поиск ключевого слова во всех видимых результатах поиска')
     def find_keyword_in_search_results(self, keyword):
-        results_list = super().get_elements(self._search_results_list)
+        results_list = super().get_elements(self._search_results_list_title)
+
         for element in results_list:
             sentence = element.text
             if keyword not in sentence:
                 raise
+
+    @allure.step('Проверка, что название и описание статьи есть минимум в 3-х результатах поиска')
+    def wait_for_element_by_title_and_description(self, title, description):
+        results_list = super().get_elements(self._search_results_list_all)
+        title_count = 0
+        description_count = 0
+
+        for title_keyword in results_list:
+            result = title_keyword.text
+            if title in result:
+                title_count += 1
+
+        for description_keyword in results_list:
+            result = description_keyword.text
+            if description in result:
+                description_count += 1
+
+        assert title_count >= 3, 'Title results are less than 3'
+        assert description_count >= 3, 'Description results are less than 3'
