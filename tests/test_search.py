@@ -30,10 +30,19 @@ def test_cancel_search(appdriver):
 
 
 @allure.title('Ex4*: Тест: проверка слов в поиске')
-def test_check_word_in_search_results(appdriver, ):
+def test_check_word_in_search_results(appdriver):
     OnboardingElements(appdriver).press_skip_onboarding_button()
     Search(appdriver).click_to_the_search_field()
     Search(appdriver).input_text_to_the_search_field(credo.search_python)
 
     Search(appdriver).find_keyword_in_search_results('Python')
+
+
+@allure.title('Ex9*: Рефакторинг темплейта')
+def test_check_word_in_search_results(appdriver):
+    OnboardingElements(appdriver).press_skip_onboarding_button()
+    Search(appdriver).click_to_the_search_field()
+    Search(appdriver).input_text_to_the_search_field(credo.search_gta_title)
+
+    Search(appdriver).wait_for_element_by_title_and_description(credo.search_gta_title, credo.search_gta_description)
 
