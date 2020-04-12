@@ -1,20 +1,52 @@
 import allure
 from src.config import BUNDLE_APP
-from src.page_object.base_page import BasePage
+from src.page_object.base_page import BasePage, locator_for_platform
 from src import credo
 
 
 class Search(BasePage):
 
-    _search_field_default_text = 'xpath://*[contains(@text, "Поиск по Википедии")]'
-    _search_field_id = 'id:%s:id/search_container' % BUNDLE_APP
-    _search_text_field_container_id = 'id:%s:id/search_src_text' % BUNDLE_APP
-    _cancel_search_button = 'id:%s:id/search_close_btn' % BUNDLE_APP
-    _empty_message_string = 'id:%s:id/search_empty_message' % BUNDLE_APP
-    _search_results_list_title = 'xpath://*[@resource-id="%s:id/page_list_item_title"]' % BUNDLE_APP
+    _search_field_default_text = locator_for_platform({
+        'ANDROID': 'xpath://*[contains(@text, "Поиск по Википедии")]',
+        'IOS': 'accessibility_id:Search Wikipedia'
+    })
+
+    _search_field_id = locator_for_platform({
+        'ANDROID': 'id:%s:id/search_container' % BUNDLE_APP,
+        'IOS': 'accessibility_id:Search Wikipedia'
+    })
+
+    _search_text_field_container_id = locator_for_platform({
+        'ANDROID': 'id:%s:id/search_src_text' % BUNDLE_APP,
+        'IOS': 'accessibility_id:Search Wikipedia'
+    })
+
+    _clear_search_button = locator_for_platform({
+        'ANDROID': 'id:%s:id/search_close_btn' % BUNDLE_APP,
+        'IOS': 'accessibility_id:Clear text'
+    })
+
+    _empty_message_string = locator_for_platform({
+        'ANDROID': 'id:%s:id/search_empty_message' % BUNDLE_APP,
+        'IOS': 'accessibility_id:No results found'
+
+    })
+
+    _search_results_list_title = locator_for_platform({
+        'ANDROID': 'xpath://*[@resource-id="%s:id/page_list_item_title"]' % BUNDLE_APP,
+        'IOS': 'xpath://XCUIElementTypeLink'
+    })
+
     _search_results_list_description = 'xpath://*[@resource-id="%s:id/page_list_item_description"]' % BUNDLE_APP
     _search_results_list_all = 'xpath://android.widget.TextView'
-    _searched_result_programming_language = f'xpath://*[contains(@text, "{credo.programming_language}")]'
+    _searched_result_programming_language = locator_for_platform({
+        'ANDROID': f'xpath://*[contains(@text, "{credo.ru_programming_language}")]',
+        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{credo.en_programming_language}")]'
+    })
+
+    _cancel_search_button = locator_for_platform({
+        'IOS': 'xpath://XCUIElementTypeStaticText[@name="Cancel"]'
+    })
 
     @allure.step('Получение текста из поля поиска')
     def get_text_in_the_search_field(self):
@@ -33,6 +65,10 @@ class Search(BasePage):
         super().get_element(self._search_text_field_container_id).clear()
 
     @allure.step('Нажатие кнопки "Х" в поле поиска')
+    def press_to_clear_search_button(self):
+        super().get_element_and_click(self._clear_search_button)
+
+    @allure.step('Нажатие кнопки "Cancel" в поле поиска (iOS)')
     def press_to_cancel_search_button(self):
         super().get_element_and_click(self._cancel_search_button)
 

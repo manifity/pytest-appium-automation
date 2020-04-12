@@ -1,5 +1,6 @@
 import allure
 from src import credo
+from src.platform import IS_ANDROID
 from src.page_object.onboarding_elements import OnboardingElements
 from src.page_object.search import Search
 from src.page_object.article import Article, ArticlesNames
@@ -16,32 +17,43 @@ def test_save_two_articles(appdriver):
     Search(appdriver).open_programming_language_page()
 
     Article(appdriver).press_save_article_to_my_list()
-    OnboardingElements(appdriver).press_to_got_it_button()  # Нажатие на кнопку "Понятно" в инфо об оффлайн статьях
-    Article(appdriver).press_create_new_list()
-    Article(appdriver).input_my_list_name()
-    Article(appdriver).press_ok_to_create_new_list()
+    if IS_ANDROID:
+        OnboardingElements(appdriver).press_to_got_it_button()  # Нажатие на кнопку "Понятно" в инфо об оффлайн статьях
+        Article(appdriver).press_create_new_list()
+        Article(appdriver).input_my_list_name()
+        Article(appdriver).press_ok_to_create_new_list()
 
-    # FIND AND SAVE THE SECOND ARTICLE
-    for back in range(2):
-        appdriver.back()
+        # FIND AND SAVE THE SECOND ARTICLE
+        for back in range(2):
+            appdriver.back()
+    else:
+        Article(appdriver).press_go_back_button()
 
     Search(appdriver).clear_the_search_field()
     Search(appdriver).input_text_to_the_search_field(credo.search_java)
     Search(appdriver).open_programming_language_page()
 
     Article(appdriver).press_save_article_to_my_list()
-    Article(appdriver).open_my_list()
+
+    if IS_ANDROID:
+        Article(appdriver).open_my_list()
+        for back in range(3):
+            appdriver.back()
+        OnboardingElements(appdriver).press_no_thanks_button_sign_up_pop_up()
+
+    else:
+        Article(appdriver).press_go_back_button()
+        Search(appdriver).press_to_cancel_search_button()
 
     # CHECK SAVED ARTICLES
-    for back in range(3):
-        appdriver.back()
-
-    OnboardingElements(appdriver).press_no_thanks_button_sign_up_pop_up()
     NavigationUI(appdriver).open_my_lists()
-    MyLists(appdriver).open_my_list()
+    if IS_ANDROID:
+        MyLists(appdriver).open_my_list()
+    else:
+        OnboardingElements(appdriver).press_no_thanks_button_sign_up_pop_up()
 
-    assert ArticlesNames(appdriver).python_article() == 'Python', 'Can\'t find Python article in your reading list'
-    assert ArticlesNames(appdriver).java_article() == 'Java', 'Can\'t find Java article in your reading list'
+    assert 'Python' in ArticlesNames(appdriver).python_article(), 'Can\'t find Python article in your reading list'
+    assert 'Java' in ArticlesNames(appdriver).java_article(), 'Can\'t find Java article in your reading list'
 
     # DELETE JAVA ARTICLE WITH SWIPE
     ArticlesNames(appdriver).delete_java_with_swipe()

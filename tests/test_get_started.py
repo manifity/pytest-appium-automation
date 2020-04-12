@@ -1,8 +1,11 @@
+import pytest
 import allure
+from src.platform import IS_IOS
 from src.page_object.ios_welcome import WelcomePage
 
 
 @allure.title('Ex10: Настройка работы на iOS')
+@pytest.mark.skipif(IS_IOS, reason='Get started test for iOS only')
 def test_get_started(appdriver):
 
     WelcomePage(appdriver).wait_learn_more_about_wiki_link()

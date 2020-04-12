@@ -2,6 +2,11 @@ from appium import webdriver
 from appium.webdriver.common.mobileby import MobileBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ex_cond
+from src.platform import PLATFORM, IS_IOS
+
+
+def locator_for_platform(selectors):
+    return selectors.get(PLATFORM, 'Undefined Selector')
 
 
 def get_locator_by_string(locator_with_type):
@@ -17,6 +22,8 @@ def get_locator_by_string(locator_with_type):
         return (MobileBy.ACCESSIBILITY_ID, locator)
     elif by_type == 'android_uiautomator':
         return (MobileBy.ANDROID_UIAUTOMATOR, locator)
+    elif by_type == 'class':
+        return (MobileBy.CLASS_NAME, locator)
     else:
         raise Exception(f'Cannot get type of locator. Locator {locator_with_type}')
 
@@ -66,3 +73,8 @@ class BasePage:
         lower_y = upper_y + element.size['height']
         middle_y = (upper_y + lower_y) / 2
         self._driver.swipe(right_x, middle_y, left_x, middle_y, duration=500)
+        if IS_IOS:
+            right_x = element.location['x']
+            point_to_click_x = (right_x + element.size['width']) - 3
+            point_to_click_y = middle_y
+            self._driver.tap([(point_to_click_x, point_to_click_y)])

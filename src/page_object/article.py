@@ -1,16 +1,22 @@
 import allure
-from src.config import BUNDLE_APP, BUNDLE_ANDROID
-from src.page_object.base_page import BasePage
 from src import credo
+from src.config import BUNDLE_APP, BUNDLE_ANDROID
+from src.page_object.base_page import BasePage, locator_for_platform
 
 
 class Article(BasePage):
 
-    _save_article_button = 'id:%s:id/article_menu_bookmark' % BUNDLE_APP
+    _save_article_button = locator_for_platform({
+        'ANDROID': 'id:%s:id/article_menu_bookmark' % BUNDLE_APP,
+        'IOS': 'accessibility_id:Save for later'
+    })
     _create_reading_list_plus_button = 'id:%s:id/create_button' % BUNDLE_APP
     _create_reading_list_name_field = 'id:%s:id/text_input' % BUNDLE_APP
     _create_reading_list_ok_button = 'id:%s:id/button1' % BUNDLE_ANDROID
-    _go_back_page_button = 'accessibility_id:Перейти вверх'
+    _go_back_page_button = locator_for_platform({
+        'ANDROID;': 'accessibility_id:Перейти вверх',
+        'IOS': 'accessibility_id:Back'
+    })
 
     _reading_list_name = f'android_uiautomator:new UiSelector().text("{credo.my_list_name}")'
     _article_title_string = 'xpath:/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/' \
@@ -22,6 +28,10 @@ class Article(BasePage):
     @allure.step('Нажатие кнопки сохранения в список')
     def press_save_article_to_my_list(self):
         super().get_element_and_click(self._save_article_button)
+
+    @allure.step('Нажатие кнопки "Back" (iOS)')
+    def press_go_back_button(self):
+        super().get_element_and_click(self._go_back_page_button)
 
     @allure.step('Нажатие кнопки создания нового списка')
     def press_create_new_list(self):
@@ -50,8 +60,15 @@ class Article(BasePage):
 
 class ArticlesNames(BasePage):
 
-    _python = f'android_uiautomator:new UiSelector().text("{credo.search_python}")'
-    _java = f'android_uiautomator:new UiSelector().text("{credo.search_java}")'
+    _python = locator_for_platform({
+        'ANDROID': f'android_uiautomator:new UiSelector().text("{credo.search_python}")',
+        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{credo.search_python}")]'
+    })
+
+    _java = locator_for_platform({
+        'ANDROID': f'android_uiautomator:new UiSelector().text("{credo.search_java}")',
+        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{credo.search_java}")]'
+    })
 
     @allure.step('Получение текста статьи (Python)')
     def python_article(self):

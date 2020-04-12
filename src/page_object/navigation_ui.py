@@ -1,12 +1,23 @@
 import allure
-from src.page_object.base_page import BasePage
+from src.page_object.base_page import BasePage, locator_for_platform
 
 
 class NavigationUI(BasePage):
 
-    _rss_list_button = 'accessibility_id:Лента'
-    _my_lists_button = 'accessibility_id:Мои списки'
-    _history_button = 'accessibility_id:История'
+    _rss_list_button = locator_for_platform({
+        'ANDROID': 'accessibility_id:Лента',
+        'IOS': 'accessibility_id:Explore'
+    })
+
+    _my_lists_button = locator_for_platform({
+        'ANDROID': 'accessibility_id:Мои списки',
+        'IOS': 'accessibility_id:Saved'
+    })
+
+    _history_button = locator_for_platform({
+        'ANDROID': 'accessibility_id:История',
+        'IOS': 'accessibility_id:History'
+    })
 
     @allure.step('Нажатие на кнопку "Лента" в навигации')
     def open_rss_list(self):
