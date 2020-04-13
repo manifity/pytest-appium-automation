@@ -1,7 +1,7 @@
 import allure
 from src.config import BUNDLE_APP
 from src.page_object.base_page import BasePage, locator_for_platform
-from src import credo
+from src.credo import Keywords
 
 
 class Search(BasePage):
@@ -34,14 +34,24 @@ class Search(BasePage):
 
     _search_results_list_title = locator_for_platform({
         'ANDROID': 'xpath://*[@resource-id="%s:id/page_list_item_title"]' % BUNDLE_APP,
-        'IOS': 'xpath://XCUIElementTypeLink'
+        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, '
+               f'"{Keywords.search_python} {Keywords.programming_language}")]'
     })
 
-    _search_results_list_description = 'xpath://*[@resource-id="%s:id/page_list_item_description"]' % BUNDLE_APP
-    _search_results_list_all = 'xpath://android.widget.TextView'
+    _search_results_list_description = locator_for_platform({
+        'ANDROID': 'xpath://*[@resource-id="%s:id/page_list_item_description"]' % BUNDLE_APP,
+        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{Keywords.search_gta_description}")]'
+    })
+
+    _search_results_list_all = locator_for_platform({
+        'ANDROID': 'xpath://android.widget.TextView',
+        # 'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{credo.search_gta_title}")]'
+        'IOS': f'xpath://XCUIElementTypeLink'
+    })
+
     _searched_result_programming_language = locator_for_platform({
-        'ANDROID': f'xpath://*[contains(@text, "{credo.ru_programming_language}")]',
-        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{credo.en_programming_language}")]'
+        'ANDROID': f'xpath://*[contains(@text, "{Keywords.programming_language}")]',
+        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{Keywords.programming_language}")]'
     })
 
     _cancel_search_button = locator_for_platform({
@@ -75,6 +85,10 @@ class Search(BasePage):
     @allure.step('Получение текста заглушки, при отсутствии результатов поиска')
     def get_text_in_the_empty_search(self):
         return super().get_element_text(self._empty_message_string)
+
+    @allure.step('Получение текста искомого результата поиска')
+    def get_text_from_the_searched_result(self):
+        return super().get_element_text(self._search_results_list_title)
 
     @allure.step('Нажатие на элемент с текстом "Язык программирования"')
     def open_programming_language_page(self):

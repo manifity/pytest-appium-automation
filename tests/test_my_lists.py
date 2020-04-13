@@ -1,5 +1,5 @@
 import allure
-from src import credo
+from src.credo import Keywords
 from src.platform import IS_ANDROID
 from src.page_object.onboarding_elements import OnboardingElements
 from src.page_object.search import Search
@@ -13,7 +13,7 @@ def test_save_two_articles(appdriver):
     # FIND AND SAVE THE FIRST ARTICLE
     OnboardingElements(appdriver).press_skip_onboarding_button()
     Search(appdriver).click_to_the_search_field()
-    Search(appdriver).input_text_to_the_search_field(credo.search_python)
+    Search(appdriver).input_text_to_the_search_field(Keywords.search_python)
     Search(appdriver).open_programming_language_page()
 
     Article(appdriver).press_save_article_to_my_list()
@@ -30,7 +30,7 @@ def test_save_two_articles(appdriver):
         Article(appdriver).press_go_back_button()
 
     Search(appdriver).clear_the_search_field()
-    Search(appdriver).input_text_to_the_search_field(credo.search_java)
+    Search(appdriver).input_text_to_the_search_field(Keywords.search_java)
     Search(appdriver).open_programming_language_page()
 
     Article(appdriver).press_save_article_to_my_list()

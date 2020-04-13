@@ -1,8 +1,18 @@
-my_list_name = 'TEST READING LIST'
-ru_programming_language = 'Язык программирования'
-en_programming_language = 'programming language'
-search_python = 'Python'
-search_java = 'Java'
-search_gta_title = 'Grand Theft Auto'
-search_gta_description = 'Компьютерная игра'
+from src.page_object.base_page import locator_for_platform
 
+
+class Keywords:
+    my_list_name = 'TEST READING LIST'
+    programming_language = locator_for_platform({
+        'ANDROID': 'Язык программирования',
+        'IOS': '(programming language)'
+    })
+
+    search_python = 'Python'
+    search_java = 'Java'
+    search_gta_title = 'Grand Theft Auto'
+
+    search_gta_description = locator_for_platform({
+        'ANDROID': 'Компьютерная игра',
+        'IOS': 'action-adventure game'
+    })
