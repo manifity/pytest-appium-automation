@@ -1,3 +1,4 @@
+import pytest
 import allure
 from src.credo import Keywords
 from src.platform import IS_ANDROID
@@ -5,6 +6,7 @@ from src.page_object.onboarding_elements import OnboardingElements
 from src.page_object.search import Search
 
 
+@pytest.mark.search
 @allure.title('Ex2: Создание метода')
 def test_get_text_from_search_field(appdriver):
     OnboardingElements(appdriver).press_skip_onboarding_button()
@@ -17,6 +19,7 @@ def test_get_text_from_search_field(appdriver):
             'Text isn\'t presented in the Search field'
 
 
+@pytest.mark.search
 @allure.title('Ex3: Тест: отмена поиска')
 def test_cancel_search(appdriver):
     OnboardingElements(appdriver).press_skip_onboarding_button()
@@ -38,6 +41,7 @@ def test_cancel_search(appdriver):
             'Text isn\'t presented in the Search field'
 
 
+@pytest.mark.search
 @allure.title('Ex4*: Тест: проверка слов в поиске')
 def test_check_word_in_search_results(appdriver):
     OnboardingElements(appdriver).press_skip_onboarding_button()
@@ -47,6 +51,7 @@ def test_check_word_in_search_results(appdriver):
     Search(appdriver).find_keyword_in_search_results('Python')
 
 
+@pytest.mark.search
 @allure.title('Ex9*: Рефакторинг темплейта')
 def test_check_word_in_search_results(appdriver):
     OnboardingElements(appdriver).press_skip_onboarding_button()

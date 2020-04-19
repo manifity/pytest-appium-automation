@@ -1,3 +1,4 @@
+import pytest
 import allure
 from src.credo import Keywords
 from src.platform import IS_ANDROID
@@ -8,6 +9,7 @@ from src.page_object.navigation_ui import NavigationUI
 from src.page_object.my_lists import MyLists
 
 
+@pytest.mark.my_lists
 @allure.title('Ex5: Тест: сохранение двух статей')
 def test_save_two_articles(appdriver):
     # FIND AND SAVE THE FIRST ARTICLE

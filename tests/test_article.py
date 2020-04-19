@@ -1,8 +1,12 @@
+import pytest
 import allure
+from src.platform import IS_IOS
 from src.page_object.onboarding_elements import OnboardingElements
 from src.page_object.search import Search
 
 
+@pytest.mark.article
+@pytest.mark.skipif(IS_IOS, reason='It\'s negative test for Android only')
 @allure.title('Ex6: Тест: assert title')
 def test_assert_title(appdriver):
     OnboardingElements(appdriver).press_skip_onboarding_button()
