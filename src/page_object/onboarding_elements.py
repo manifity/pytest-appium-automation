@@ -12,7 +12,6 @@ class OnboardingElements(BasePage):
 
     _offline_article_got_it_button = locator_for_platform({
         'ANDROID': 'id:%s:id/onboarding_button' % BUNDLE_APP,
-        'IOS': ''
     })
 
     _sign_in_pop_up_no_button = locator_for_platform({

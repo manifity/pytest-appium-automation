@@ -16,3 +16,11 @@ class Keywords:
         'ANDROID': 'Компьютерная игра',
         'IOS': 'action-adventure game'
     })
+
+
+class AssertTexts:
+    search_in_wiki = locator_for_platform({
+        'ANDROID': 'Поиск по Википедии',
+        'IOS': 'Search Wikipedia',
+        'MOBILE_WEB': 'Искать в Википедии'
+    })

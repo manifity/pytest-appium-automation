@@ -8,45 +8,56 @@ class Search(BasePage):
 
     _search_field_default_text = locator_for_platform({
         'ANDROID': 'xpath://*[contains(@text, "Поиск по Википедии")]',
-        'IOS': 'accessibility_id:Search Wikipedia'
+        'IOS': 'accessibility_id:Search Wikipedia',
+        # 'MOBILE_WEB': 'css:form>input[type="search"]'
+        'MOBILE_WEB': 'xpath://*[contains(text(), "Искать в Википедии")]'
     })
 
     _search_field_id = locator_for_platform({
         'ANDROID': 'id:%s:id/search_container' % BUNDLE_APP,
-        'IOS': 'accessibility_id:Search Wikipedia'
+        'IOS': 'accessibility_id:Search Wikipedia',
+        'MOBILE_WEB': 'id:searchIcon'
     })
 
     _search_text_field_container_id = locator_for_platform({
         'ANDROID': 'id:%s:id/search_src_text' % BUNDLE_APP,
-        'IOS': 'accessibility_id:Search Wikipedia'
+        'IOS': 'accessibility_id:Search Wikipedia',
+        'MOBILE_WEB': 'css:form>input[type="search"]'
     })
 
     _clear_search_button = locator_for_platform({
         'ANDROID': 'id:%s:id/search_close_btn' % BUNDLE_APP,
-        'IOS': 'accessibility_id:Clear text'
+        'IOS': 'accessibility_id:Clear text',
+        'MOBILE_WEB': 'css:form>button'
     })
 
     _empty_message_string = locator_for_platform({
         'ANDROID': 'id:%s:id/search_empty_message' % BUNDLE_APP,
-        'IOS': 'accessibility_id:No results found'
+        'IOS': 'accessibility_id:No results found',
+        # 'MOBILE_WEB': 'css:p.without-results'
+        'MOBILE_WEB': 'xpath://*[contains(@class, "search")][contains(text(), "Искать в Википедии")]'
 
     })
 
     _search_results_list_title = locator_for_platform({
         'ANDROID': 'xpath://*[@resource-id="%s:id/page_list_item_title"]' % BUNDLE_APP,
         'IOS': f'xpath://XCUIElementTypeLink[contains(@name, '
-               f'"{Keywords.search_python} {Keywords.programming_language}")]'
+               f'"{Keywords.search_python} {Keywords.programming_language}")]',
+        # 'MOBILE_WEB': 'css:ul.page-list'
+        'MOBILE_WEB': 'css:ul.page-list>li.page-summary'
     })
 
     _search_results_list_description = locator_for_platform({
         'ANDROID': 'xpath://*[@resource-id="%s:id/page_list_item_description"]' % BUNDLE_APP,
-        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{Keywords.search_gta_description}")]'
+        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{Keywords.search_gta_description}")]',
+        'MOBILE_WEB': f'xpath://div[contains(@class, "wikipedia-description")]'
+                      f'[contains(text(), "{Keywords.programming_language}")]'
     })
 
     _search_results_list_all = locator_for_platform({
         'ANDROID': 'xpath://android.widget.TextView',
-        # 'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{credo.search_gta_title}")]'
-        'IOS': f'xpath://XCUIElementTypeLink'
+        'IOS': f'xpath://XCUIElementTypeLink',
+        'MOBILE_WEB': 'css:ul.page-list>li.page-summary'
     })
 
     _searched_result_programming_language = locator_for_platform({
@@ -55,7 +66,8 @@ class Search(BasePage):
     })
 
     _cancel_search_button = locator_for_platform({
-        'IOS': 'xpath://XCUIElementTypeStaticText[@name="Cancel"]'
+        'IOS': 'xpath://XCUIElementTypeStaticText[@name="Cancel"]',
+        'MOBILE_WEB': 'css:button.cancel'
     })
 
     @allure.step('Получение текста из поля поиска')
@@ -64,7 +76,7 @@ class Search(BasePage):
 
     @allure.step('Клик в поле поиска')
     def click_to_the_search_field(self):
-        super().get_element_and_click(self._search_field_default_text)
+        super().get_element_and_click(self._search_field_id)
 
     @allure.step('Ввод текста в поле поиска')
     def input_text_to_the_search_field(self, text):

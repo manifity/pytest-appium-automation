@@ -24,6 +24,8 @@ def get_locator_by_string(locator_with_type):
         return (MobileBy.ANDROID_UIAUTOMATOR, locator)
     elif by_type == 'class':
         return (MobileBy.CLASS_NAME, locator)
+    elif by_type == 'css':
+        return (MobileBy.CSS_SELECTOR, locator)
     else:
         raise Exception(f'Cannot get type of locator. Locator {locator_with_type}')
 
@@ -54,7 +56,7 @@ class BasePage:
         by = get_locator_by_string(locator)
         element = WebDriverWait(self._driver, timeout).until(
             ex_cond.visibility_of_element_located(by), ' : '.join(by))
-        return element.text
+        return element.get_attribute
 
     def get_element_and_click(self, locator: str, timeout=10):
         by = get_locator_by_string(locator)

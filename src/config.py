@@ -38,3 +38,18 @@ DESIRED_CAPS_IOS = {
     'app': MY_APP_IOS,
     # 'showIOSLog': 'true'
 }
+
+DESIRED_CAPS_MOBILE_WEB = {
+    'platformName': 'iOS',
+    'platformVersion': '13.3',
+    'browserName': 'safari',
+    'deviceName': 'iPhone 8',
+}
+
+# DESIRED_CAPS_MOBILE_WEB = {
+#     'platformName': 'Android',
+#     'platformVersion': '10',
+#     'deviceName': 'emulator-5554',
+#     'automationName': 'Appium',
+#     'browserName': 'Chrome'
+# }
