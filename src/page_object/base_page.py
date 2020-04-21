@@ -2,7 +2,7 @@ from appium import webdriver
 from appium.webdriver.common.mobileby import MobileBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ex_cond
-from src.platform import PLATFORM, IS_IOS
+from src.platform import PLATFORM, IS_IOS, IS_MOBILE_WEB
 
 
 def locator_for_platform(selectors):
@@ -56,7 +56,13 @@ class BasePage:
         by = get_locator_by_string(locator)
         element = WebDriverWait(self._driver, timeout).until(
             ex_cond.visibility_of_element_located(by), ' : '.join(by))
-        return element.get_attribute
+        if IS_MOBILE_WEB:
+            if element.get_attribute('placeholder') is not None:
+                return element.get_attribute('placeholder')
+            else:
+                return element.get_attribute('title')
+        else:
+            return element.text
 
     def get_element_and_click(self, locator: str, timeout=10):
         by = get_locator_by_string(locator)

@@ -14,7 +14,8 @@ class Keywords:
 
     search_gta_description = locator_for_platform({
         'ANDROID': 'Компьютерная игра',
-        'IOS': 'action-adventure game'
+        'IOS': 'action-adventure game',
+        'MOBILE_WEB': 'action-adventure game'
     })
 
 
@@ -22,5 +23,5 @@ class AssertTexts:
     search_in_wiki = locator_for_platform({
         'ANDROID': 'Поиск по Википедии',
         'IOS': 'Search Wikipedia',
-        'MOBILE_WEB': 'Искать в Википедии'
+        'MOBILE_WEB': 'Search Wikipedia'
     })

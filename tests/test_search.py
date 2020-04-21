@@ -18,46 +18,48 @@ from src.page_object.search import Search
 #     else:
 #         assert Search(appdriver).get_text_in_the_search_field() == 'Search Wikipedia',\
 #             'Text isn\'t presented in the Search field'
+#
+#
+# @pytest.mark.search
+# @allure.title('Ex3: Тест: отмена поиска')
+# def test_cancel_search(appdriver):
+#     # if IS_IOS or IS_ANDROID:
+#     #     OnboardingElements(appdriver).press_skip_onboarding_button()
+#     Search(appdriver).click_to_the_search_field()
+#     Search(appdriver).input_text_to_the_search_field('Python')
+#
+#     assert 'Python' in Search(appdriver).get_text_from_the_searched_result(), \
+#         'Can\'t find Python article in your reading list'
+#     # print(Search(appdriver).get_text_from_the_searched_result())
+#
+#     Search(appdriver).press_to_clear_search_button()
+#
+#     assert Search(appdriver).get_text_in_the_search_field() == AssertTexts.search_in_wiki
+#
+#     if IS_ANDROID:
+#         assert Search(appdriver).get_text_in_the_empty_search() ==\
+#            'Ищите и читайте свободную энциклопедию на своём языке', 'Search results aren\'t vanished'
 
 
 @pytest.mark.search
-@allure.title('Ex3: Тест: отмена поиска')
-def test_cancel_search(appdriver):
-    # if not IS_MOBILE_WEB:
-    # OnboardingElements(appdriver).press_skip_onboarding_button()
+@allure.title('Ex4*: Тест: проверка слов в поиске')
+def test_check_word_in_search_results(appdriver):
+    if IS_IOS or IS_ANDROID:
+        OnboardingElements(appdriver).press_skip_onboarding_button()
     Search(appdriver).click_to_the_search_field()
-    Search(appdriver).input_text_to_the_search_field('Python')
+    Search(appdriver).input_text_to_the_search_field(Keywords.search_python)
 
-    # assert 'Python' in Search(appdriver).get_text_from_the_searched_result(), \
-    #     'Can\'t find Python article in your reading list'
-    print(Search(appdriver).get_text_from_the_searched_result())
-
-    Search(appdriver).press_to_clear_search_button()
-
-    assert Search(appdriver).get_text_in_the_search_field() == AssertTexts.search_in_wiki()
-
-    if IS_ANDROID:
-        assert Search(appdriver).get_text_in_the_empty_search() ==\
-           'Ищите и читайте свободную энциклопедию на своём языке', 'Search results aren\'t vanished'
+    Search(appdriver).find_keyword_in_search_results('Python')
 
 
-# @pytest.mark.search
-# @allure.title('Ex4*: Тест: проверка слов в поиске')
-# def test_check_word_in_search_results(appdriver):
-#     OnboardingElements(appdriver).press_skip_onboarding_button()
-#     Search(appdriver).click_to_the_search_field()
-#     Search(appdriver).input_text_to_the_search_field(Keywords.search_python)
-#
-#     Search(appdriver).find_keyword_in_search_results('Python')
-#
-#
-# @pytest.mark.search
-# @allure.title('Ex9*: Рефакторинг темплейта')
-# def test_check_word_in_search_results(appdriver):
-#     OnboardingElements(appdriver).press_skip_onboarding_button()
-#     Search(appdriver).click_to_the_search_field()
-#     Search(appdriver).input_text_to_the_search_field(Keywords.search_gta_title)
-#
-#     Search(appdriver).wait_for_element_by_title_and_description(
-#         Keywords.search_gta_title, Keywords.search_gta_description)
+@pytest.mark.search
+@allure.title('Ex9*: Рефакторинг темплейта')
+def test_check_word_in_search_results(appdriver):
+    if IS_IOS or IS_ANDROID:
+        OnboardingElements(appdriver).press_skip_onboarding_button()
+    Search(appdriver).click_to_the_search_field()
+    Search(appdriver).input_text_to_the_search_field(Keywords.search_gta_title)
+
+    Search(appdriver).wait_for_element_by_title_and_description(
+        Keywords.search_gta_title, Keywords.search_gta_description)
 

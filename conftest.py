@@ -6,6 +6,6 @@ from src import platform
 def appdriver():
     driver = platform.get()
     if platform.IS_MOBILE_WEB:
-        driver.get('https://ru.m.wikipedia.org/')
+        driver.get('https://en.m.wikipedia.org/')
     yield driver
     driver.quit()

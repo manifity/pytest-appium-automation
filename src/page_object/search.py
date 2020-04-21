@@ -2,6 +2,7 @@ import allure
 from src.config import BUNDLE_APP
 from src.page_object.base_page import BasePage, locator_for_platform
 from src.credo import Keywords
+from src.platform import IS_MOBILE_WEB
 
 
 class Search(BasePage):
@@ -9,8 +10,7 @@ class Search(BasePage):
     _search_field_default_text = locator_for_platform({
         'ANDROID': 'xpath://*[contains(@text, "Поиск по Википедии")]',
         'IOS': 'accessibility_id:Search Wikipedia',
-        # 'MOBILE_WEB': 'css:form>input[type="search"]'
-        'MOBILE_WEB': 'xpath://*[contains(text(), "Искать в Википедии")]'
+        'MOBILE_WEB': 'css:form>input[type="search"]'
     })
 
     _search_field_id = locator_for_platform({
@@ -43,21 +43,20 @@ class Search(BasePage):
         'ANDROID': 'xpath://*[@resource-id="%s:id/page_list_item_title"]' % BUNDLE_APP,
         'IOS': f'xpath://XCUIElementTypeLink[contains(@name, '
                f'"{Keywords.search_python} {Keywords.programming_language}")]',
-        # 'MOBILE_WEB': 'css:ul.page-list'
-        'MOBILE_WEB': 'css:ul.page-list>li.page-summary'
+        # 'MOBILE_WEB': 'class:page-list thumbs actionable'
+        'MOBILE_WEB': 'css:ul.page-list.thumbs.actionable>li.page-summary'
     })
 
     _search_results_list_description = locator_for_platform({
         'ANDROID': 'xpath://*[@resource-id="%s:id/page_list_item_description"]' % BUNDLE_APP,
         'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{Keywords.search_gta_description}")]',
-        'MOBILE_WEB': f'xpath://div[contains(@class, "wikipedia-description")]'
-                      f'[contains(text(), "{Keywords.programming_language}")]'
+        'MOBILE_WEB': 'css:ul.page-list.thumbs.actionable>li.page-summary>a.title>div.wikidata-description'
     })
 
     _search_results_list_all = locator_for_platform({
         'ANDROID': 'xpath://android.widget.TextView',
         'IOS': f'xpath://XCUIElementTypeLink',
-        'MOBILE_WEB': 'css:ul.page-list>li.page-summary'
+        'MOBILE_WEB': 'css:ul.page-list.thumbs.actionable>li.page-summary'
     })
 
     _searched_result_programming_language = locator_for_platform({
@@ -111,20 +110,27 @@ class Search(BasePage):
         results_list = super().get_elements(self._search_results_list_title)
 
         for element in results_list:
-            sentence = element.text
-            if keyword not in sentence:
-                raise
+            if IS_MOBILE_WEB:
+                sentence = element.get_attribute('title')
+                if keyword not in sentence:
+                    raise Exception('Keyword not in title')
+            else:
+                sentence = element.text
+                if keyword not in sentence:
+                    raise
 
     @allure.step('Проверка, что название и описание статьи есть минимум в 3-х результатах поиска')
     def wait_for_element_by_title_and_description(self, title, description):
         results_list = super().get_elements(self._search_results_list_all)
         title_count = 0
-        description_count = 0
 
         for title_keyword in results_list:
             result = title_keyword.text
             if title in result:
                 title_count += 1
+
+        results_list = super().get_elements(self._search_results_list_description)
+        description_count = 0
 
         for description_keyword in results_list:
             result = description_keyword.text
