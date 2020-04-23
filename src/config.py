@@ -1,4 +1,4 @@
-APPIUM_HOST = 'http://localhost:4444/wd/hub'
+APPIUM_HOST = 'http://localhost:4445/wd/hub'
 
 MY_APP_ANDROID = '/Users/m.barinov/PycharmProjects/appium/Simulators/wiki.apk'
 MY_APP_IOS = '/Users/m.barinov/PycharmProjects/appium/Simulators/Wikipedia.app'
@@ -36,7 +36,6 @@ DESIRED_CAPS_IOS = {
     'automationName': 'XCUITest',
     'deviceName': 'iPhone 8',
     'app': MY_APP_IOS,
-    # 'showIOSLog': 'true'
 }
 
 DESIRED_CAPS_MOBILE_WEB = {

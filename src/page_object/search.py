@@ -34,16 +34,13 @@ class Search(BasePage):
     _empty_message_string = locator_for_platform({
         'ANDROID': 'id:%s:id/search_empty_message' % BUNDLE_APP,
         'IOS': 'accessibility_id:No results found',
-        # 'MOBILE_WEB': 'css:p.without-results'
-        'MOBILE_WEB': 'xpath://*[contains(@class, "search")][contains(text(), "Искать в Википедии")]'
-
+        'MOBILE_WEB': 'css:p.without-results'
     })
 
     _search_results_list_title = locator_for_platform({
         'ANDROID': 'xpath://*[@resource-id="%s:id/page_list_item_title"]' % BUNDLE_APP,
         'IOS': f'xpath://XCUIElementTypeLink[contains(@name, '
                f'"{Keywords.search_python} {Keywords.programming_language}")]',
-        # 'MOBILE_WEB': 'class:page-list thumbs actionable'
         'MOBILE_WEB': 'css:ul.page-list.thumbs.actionable>li.page-summary'
     })
 
@@ -61,7 +58,8 @@ class Search(BasePage):
 
     _searched_result_programming_language = locator_for_platform({
         'ANDROID': f'xpath://*[contains(@text, "{Keywords.programming_language}")]',
-        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{Keywords.programming_language}")]'
+        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{Keywords.programming_language}")]',
+        'MOBILE_WEB': f'xpath://*[contains(text(), "{Keywords.programming_language}")]'
     })
 
     _cancel_search_button = locator_for_platform({

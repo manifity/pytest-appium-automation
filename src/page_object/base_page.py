@@ -59,8 +59,14 @@ class BasePage:
         if IS_MOBILE_WEB:
             if element.get_attribute('placeholder') is not None:
                 return element.get_attribute('placeholder')
-            else:
+            elif element.get_attribute('title') is not None:
                 return element.get_attribute('title')
+            elif element.get_attribute('text') is not None:
+                return element.get_attribute('text')
+            elif element.get_attribute('textContent') is not None:
+                return element.get_attribute('textContent')
+            else:
+                return element.text
         else:
             return element.text
 

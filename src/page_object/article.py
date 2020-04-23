@@ -1,4 +1,5 @@
 import allure
+from time import sleep
 from src.credo import Keywords
 from src.config import BUNDLE_APP, BUNDLE_ANDROID
 from src.page_object.base_page import BasePage, locator_for_platform
@@ -8,7 +9,8 @@ class Article(BasePage):
 
     _save_article_button = locator_for_platform({
         'ANDROID': 'id:%s:id/article_menu_bookmark' % BUNDLE_APP,
-        'IOS': 'accessibility_id:Save for later'
+        'IOS': 'accessibility_id:Save for later',
+        'MOBILE_WEB': 'xpath://ul/li[2]/a[2]'
     })
 
     _create_reading_list_plus_button = 'id:%s:id/create_button' % BUNDLE_APP
@@ -30,6 +32,7 @@ class Article(BasePage):
     @allure.step('Нажатие кнопки сохранения в список')
     def press_save_article_to_my_list(self):
         super().get_element_and_click(self._save_article_button)
+        sleep(3)
 
     @allure.step('Нажатие кнопки "Back" (iOS)')
     def press_go_back_button(self):
@@ -64,12 +67,14 @@ class ArticlesNames(BasePage):
 
     _python = locator_for_platform({
         'ANDROID': f'android_uiautomator:new UiSelector().text("{Keywords.search_python}")',
-        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{Keywords.search_python}")]'
+        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{Keywords.search_python}")]',
+        'MOBILE_WEB': f'xpath://*[contains(text(), "{Keywords.search_python}")]'
     })
 
     _java = locator_for_platform({
         'ANDROID': f'android_uiautomator:new UiSelector().text("{Keywords.search_java}")',
-        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{Keywords.search_java}")]'
+        'IOS': f'xpath://XCUIElementTypeLink[contains(@name, "{Keywords.search_java}")]',
+        'MOBILE_WEB': f'xpath://*[contains(text(), "{Keywords.search_java}")]'
     })
 
     @allure.step('Получение текста статьи (Python)')

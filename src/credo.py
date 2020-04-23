@@ -5,7 +5,8 @@ class Keywords:
     my_list_name = 'TEST READING LIST'
     programming_language = locator_for_platform({
         'ANDROID': 'Язык программирования',
-        'IOS': '(programming language)'
+        'IOS': '(programming language)',
+        'MOBILE_WEB': '(programming language)'
     })
 
     search_python = 'Python'
@@ -25,3 +26,8 @@ class AssertTexts:
         'IOS': 'Search Wikipedia',
         'MOBILE_WEB': 'Search Wikipedia'
     })
+
+
+class Users:
+    username = 'PytestAppiumEx'
+    password = 'QWasZX12'
