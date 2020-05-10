@@ -1,6 +1,5 @@
 import os
 from appium import webdriver
-from selenium.webdriver import ChromeOptions
 from src import config
 
 
