@@ -1,4 +1,4 @@
-APPIUM_HOST = 'http://localhost:4723/wd/hub'
+APPIUM_HOST = 'http://localhost:4444/wd/hub'
 
 MY_APP_ANDROID = '/Users/m.barinov/PycharmProjects/appium/Simulators/wiki.apk'
 MY_APP_IOS = '/Users/m.barinov/PycharmProjects/appium/Simulators/Wikipedia.app'
