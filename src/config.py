@@ -1,4 +1,4 @@
-APPIUM_HOST = 'http://localhost:4444/wd/hub'
+APPIUM_HOST = 'http://localhost:4445/wd/hub'
 
 MY_APP_ANDROID = '/Users/m.barinov/PycharmProjects/appium/Simulators/wiki.apk'
 MY_APP_IOS = '/Users/m.barinov/PycharmProjects/appium/Simulators/Wikipedia.app'
@@ -43,6 +43,7 @@ DESIRED_CAPS_MOBILE_WEB = {
     'platformVersion': '13.3',
     'browserName': 'safari',
     'deviceName': 'iPhone 8',
+    'sendKeyStrategy': 'setValue'
 }
 
 # DESIRED_CAPS_MOBILE_WEB = {
